@@ -1,12 +1,19 @@
 <template>
   <v-app>
-    <v-navigation-drawer app temporary></v-navigation-drawer>
+    <v-navigation-drawer 
+      app 
+      temporary
+      v-model="drawer"
+    ></v-navigation-drawer>
     <v-toolbar app dark color="primary">
-        <v-toolbar-side-icon></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title>Ad aplication</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat>Link One</v-btn>
+            <v-btn flat>
+                <v-icon left>view_list</v-icon>
+                Link One
+            </v-btn>
         </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -17,5 +24,10 @@
 
 <script>
 export default {
+  data () {
+    return {
+      drawer: false
+    }
+  }
 }
 </script>
