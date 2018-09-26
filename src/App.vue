@@ -23,7 +23,10 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar app dark color="primary">
-        <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon 
+          class="hidden-md-and-up" 
+          @click="drawer = !drawer"
+        ></v-toolbar-side-icon>
         <v-toolbar-title>Ad aplication</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
