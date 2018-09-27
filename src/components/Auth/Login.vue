@@ -24,6 +24,7 @@
                     type="password"
                     v-model="password"
                     :counter='8'
+                    :rules="passwordRules"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
@@ -32,6 +33,7 @@
                 <v-btn 
                   color="primary"
                   @click="onSubmit"
+                  :disabled="!valid"
                 >Login</v-btn>
               </v-card-actions>
             </v-card>
@@ -50,12 +52,22 @@ export default {
       emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => (v && v.length > 8) || 'Password must be less than 8 characters'
       ]
     }
   },
   methods: {
     onSubmit () {
-      alert('Hi')
+      if (this.$refs.form.validate()) {
+        const user = {
+          email: this.email,
+          password: this.password
+        }
+        console.log(user)
+      }
     }
   }
 }
