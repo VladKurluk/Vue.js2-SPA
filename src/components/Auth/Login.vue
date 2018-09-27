@@ -7,13 +7,14 @@
                 <v-toolbar-title>Login form</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form ref="form" v-model="valid" validation>
                   <v-text-field 
                     prepend-icon="person" 
                     name="email" 
                     label="Email" 
                     type="email"
                     v-model="email"
+                    :rules="emailRules"
                   ></v-text-field>
                   <v-text-field 
                     id="password" 
@@ -22,6 +23,7 @@
                     label="Password" 
                     type="password"
                     v-model="password"
+                    :counter='8'
                   ></v-text-field>
                 </v-form>
               </v-card-text>
@@ -43,7 +45,12 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      valid: false,
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ]
     }
   },
   methods: {
