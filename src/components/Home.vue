@@ -13,10 +13,34 @@
             </v-flex>
         </v-layout>
     </v-container>
-    <v-container>
+    <v-container grid-list-lg>
         <v-layout row>
-            <v-flex xs12>
-                
+            <v-flex 
+              xs12
+              v-for="(ad,i) in ads"
+              :key="i"
+              
+            >
+                <v-card>
+                    <v-img
+                    :src="ad.imageSrc"
+                    aspect-ratio="2.75"
+                    height='200px'
+                    ></v-img>
+
+                    <v-card-title primary-title>
+                    <div>
+                        <h3 class="headline mb-0">{{ad.title}}</h3>
+                        <div>{{ad.description}}</div>
+                    </div>
+                    </v-card-title>
+
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn flat>Open</v-btn>
+                    <v-btn raised class="primary">Buy</v-btn>
+                    </v-card-actions>
+                </v-card>
             </v-flex>
         </v-layout>
     </v-container>
