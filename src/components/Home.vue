@@ -14,9 +14,11 @@
         </v-layout>
     </v-container>
     <v-container grid-list-lg>
-        <v-layout row>
+        <v-layout row wrap>
             <v-flex 
               xs12
+              sm6
+              md4
               v-for="(ad,i) in ads"
               :key="i"
               
