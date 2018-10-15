@@ -69,10 +69,11 @@ export default {
         const newAd = {
           title: this.title,
           description: this.description,
-          promo: this.promo
+          promo: this.promo,
+          imageSrc: 'http://mignews.com/aimages/08_18/210818_130648_01018_2.jpg'
         }
 
-        console.log(newAd)
+        this.$store.dispatch('createAd', newAd)
       }
     }
   }
