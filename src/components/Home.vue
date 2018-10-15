@@ -8,7 +8,11 @@
                     v-for="(ad,i) in ads"
                     :key="i"
                     :src="ad.imageSrc"
-                    ></v-carousel-item>
+                    >
+                        <div class="carousel-link">
+                            <v-btn class="error" :to="'/ad/' + ad.id">{{ ad.title }}</v-btn>
+                        </div>
+                    </v-carousel-item>
                 </v-carousel>
             </v-flex>
         </v-layout>
@@ -21,7 +25,6 @@
               md4
               v-for="(ad,i) in ads"
               :key="i"
-              
             >
                 <v-card>
                     <v-img
@@ -61,4 +64,17 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+    .carousel-link {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        background: rgba(0,0,0, .5);
+        padding: 5px 15px;
+        border-radius: 6px;
+    }
+</style>
+
 
