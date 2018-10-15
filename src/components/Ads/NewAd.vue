@@ -36,13 +36,45 @@
                 <img src="https://cdn.vuetifyjs.com/images/carousel/planet.jpg" alt="" height="150px">
             </v-flex>
         </v-layout>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-switch
+                  label="Add to promo?"
+                  v-model="promo"
+                ></v-switch>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-spacer></v-spacer>
+                <v-btn :disabled="!valid" class="success" @click="createAd">Create Ad</v-btn>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
 <script>
 export default {
   data () {
-    return {}
+    return {
+      valid: false,
+      title: '',
+      description: '',
+      promo: false
+    }
+  },
+  methods: {
+    createAd () {
+      if (this.$refs.form.validate()) {
+        const newAd = {
+          title: this.title,
+          description: this.description,
+          promo: this.promo
+        }
+
+        console.log(newAd)
+      }
+    }
   }
 }
 </script>
