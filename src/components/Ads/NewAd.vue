@@ -23,6 +23,19 @@
                 </v-form>
             </v-flex>
         </v-layout>
+        <v-layout row class="mb-3">
+            <v-flex xs12 sm6 offset-sm3>
+                <v-btn class="warning">
+                    Upload image
+                    <v-icon right dark>cloud_upload</v-icon>
+                </v-btn>
+            </v-flex>
+        </v-layout>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <img src="https://cdn.vuetifyjs.com/images/carousel/planet.jpg" alt="" height="150px">
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
