@@ -2,7 +2,11 @@ export default {
   state: {
     user: null
   },
-  mutations: {},
+  mutations: {
+    setUser (state, payload) {
+      state.user = payload
+    }
+  },
   actions: {},
   getters: {
     user (state) {
