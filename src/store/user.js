@@ -4,5 +4,9 @@ export default {
   },
   mutations: {},
   actions: {},
-  getters: {}
+  getters: {
+    user (state) {
+      return state.user
+    }
+  }
 }
