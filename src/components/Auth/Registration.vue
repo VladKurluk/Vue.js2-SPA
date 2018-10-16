@@ -89,7 +89,11 @@ export default {
         }
 
         this.$store.dispatch('registerUser', user)
-        console.log(user)
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch(err => console.log(err))
+        //console.log(user)
       }
     }
   }
