@@ -93,7 +93,7 @@ export default {
             this.$router.push('/')
           })
           .catch(err => console.log(err))
-        //console.log(user)
+        // console.log(user)
       }
     }
   }
