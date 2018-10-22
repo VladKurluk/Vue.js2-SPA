@@ -33,7 +33,8 @@
                 <v-btn 
                   color="primary"
                   @click="onSubmit"
-                  :disabled="!valid"
+                  :loading='loading'
+                  :disabled="!valid || loading"
                 >Login</v-btn>
               </v-card-actions>
             </v-card>
@@ -57,6 +58,11 @@ export default {
         v => !!v || 'Password is required',
         v => (v && v.length > 8) || 'Password must be less than 8 characters'
       ]
+    }
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading
     }
   },
   methods: {
