@@ -47,7 +47,7 @@
         <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                 <v-spacer></v-spacer>
-                <v-btn :disabled="!valid" class="success" @click="createAd">Create Ad</v-btn>
+                <v-btn :loading="loading" :disabled="!valid || loading" class="success" @click="createAd">Create Ad</v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -63,17 +63,27 @@ export default {
       promo: false
     }
   },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
   methods: {
     createAd () {
       if (this.$refs.form.validate()) {
         const newAd = {
           title: this.title,
           description: this.description,
+          ownerId: this.ownerId,
           promo: this.promo,
           imageSrc: 'http://mignews.com/aimages/08_18/210818_130648_01018_2.jpg'
         }
 
         this.$store.dispatch('createAd', newAd)
+          .then(() => {
+            this.$router.push('/list')
+          })
+          .catch(() => {})
       }
     }
   }
