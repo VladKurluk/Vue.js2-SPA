@@ -84,6 +84,9 @@ export default {
   computed: {
     error () {
       return this.$store.getters.error
+    },
+    isUserLoggedIn () {
+      return this.$store.getters.isUserLoggedIn
     }
   },
   methods: {
