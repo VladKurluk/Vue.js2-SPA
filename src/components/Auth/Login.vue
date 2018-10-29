@@ -61,7 +61,7 @@ export default {
     }
   },
   computed: {
-    loading() {
+    loading () {
       return this.$store.getters.loading
     }
   },
@@ -72,12 +72,11 @@ export default {
           email: this.email,
           password: this.password
         }
-        
         this.$store.dispatch('loginUser', user)
           .then(() => {
             this.$router.push('/')
           })
-          .catch(()=> {})
+          .catch(() => {})
       }
     }
   },

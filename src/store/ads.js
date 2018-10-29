@@ -13,19 +13,18 @@ class Ad {
 
 export default {
   state: {
-    ads: [
-      {title: 'FirstAd', description: 'Descr', promo: false, imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg', id: '123'},
-      {title: 'SecondAd', description: 'Descr2', promo: true, imageSrc: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg', id: '1234'}
-    ]
+    ads: []
   },
   mutations: {
     createAd (state, payload) {
       state.ads.push(payload)
+    },
+    loadAds (state, payload) {
+      state.ads = payload
     }
   },
   actions: {
     async createAd ({commit, getters}, payload) {
-      // payload.id = '458'
       commit('clearError')
       commit('setLoading', true)
 
@@ -50,8 +49,29 @@ export default {
         commit('setLoading', false)
         throw error
       }
+    },
+    async fetchAds ({commit}) {
+      commit('clearError')
+      commit('setLoading', true)
 
-      // commit('createAd', payload)
+      const resultAds = []
+
+      try {
+        const fbVal = await firebase.database().ref('ads').once('value')
+        const ads = fbVal.val()
+        Object.keys(ads).forEach(key => {
+          const ad = ads[key]
+          resultAds.push(
+            new Ad(ad.title, ad.description, /* ad.ownerId, */ ad.imageSrc, ad.promo, key)
+          )
+        })
+        commit('loadAds', resultAds)
+        commit('setLoading', false)
+      } catch (error) {
+        commit('setError', error.message)
+        commit('setLoading', false)
+        throw error
+      }
     }
   },
   getters: {
@@ -60,7 +80,7 @@ export default {
     },
     promoAds (state) {
       return state.ads.filter(ad => {
-        return ad.promo === true
+        return ad.promo
       })
     },
     myAds (state) {

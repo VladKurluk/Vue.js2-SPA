@@ -57,10 +57,10 @@
 export default {
   data () {
     return {
-      valid: false,
       title: '',
       description: '',
-      promo: false
+      promo: false,
+      valid: false
     }
   },
   computed: {
@@ -71,15 +71,14 @@ export default {
   methods: {
     createAd () {
       if (this.$refs.form.validate()) {
-        const newAd = {
+        const ad = {
           title: this.title,
           description: this.description,
-          ownerId: this.ownerId,
           promo: this.promo,
           imageSrc: 'http://mignews.com/aimages/08_18/210818_130648_01018_2.jpg'
         }
 
-        this.$store.dispatch('createAd', newAd)
+        this.$store.dispatch('createAd', ad)
           .then(() => {
             this.$router.push('/list')
           })
