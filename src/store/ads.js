@@ -1,10 +1,10 @@
 import * as firebase from 'firebase'
 
 class Ad {
-  constructor (title, description, /* ownerId, */ imageSrc = '', promo = false, id = null) {
+  constructor (title, description, ownerId, imageSrc = '', promo = false, id = null) {
     this.title = title
     this.description = description
-    // this.ownerId = ownerId
+    this.ownerId = ownerId
     this.imageSrc = imageSrc
     this.promo = promo
     this.id = id
@@ -32,13 +32,13 @@ export default {
         const newAd = new Ad(
           payload.title,
           payload.description,
-          // getters.user.id,
+          getters.user.id,
           payload.imageSrc,
           payload.promo
         )
 
         const ad = await firebase.database().ref('ads').push(newAd)
-        console.log(getters.user.id)
+
         commit('setLoading', false)
         commit('createAd', {
           ...newAd,
@@ -62,7 +62,7 @@ export default {
         Object.keys(ads).forEach(key => {
           const ad = ads[key]
           resultAds.push(
-            new Ad(ad.title, ad.description, /* ad.ownerId, */ ad.imageSrc, ad.promo, key)
+            new Ad(ad.title, ad.description, ad.ownerId, ad.imageSrc, ad.promo, key)
           )
         })
         commit('loadAds', resultAds)

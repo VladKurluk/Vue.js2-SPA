@@ -74,6 +74,7 @@ export default {
         const ad = {
           title: this.title,
           description: this.description,
+          ownerId: this.ownerId,
           promo: this.promo,
           imageSrc: 'http://mignews.com/aimages/08_18/210818_130648_01018_2.jpg'
         }
