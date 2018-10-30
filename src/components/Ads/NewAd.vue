@@ -32,12 +32,23 @@
                     Upload image
                     <v-icon right dark>cloud_upload</v-icon>
                 </v-btn>
-                <input ref="fileInput" type="file" style="display: none;" accept='image/*'>
+                <input 
+                  ref="fileInput" 
+                  type="file" 
+                  style="display: none;" 
+                  accept='image/*'
+                  @change='onFileChange'
+                />
             </v-flex>
         </v-layout>
         <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-                <img src="https://cdn.vuetifyjs.com/images/carousel/planet.jpg" alt="" height="150px">
+                <img 
+                  v-if="imageSrc"
+                  :src="imageSrc" 
+                  alt="" 
+                  height="150px" 
+                />
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -64,7 +75,9 @@ export default {
       title: '',
       description: '',
       promo: false,
-      valid: false
+      valid: false,
+      image: null,
+      imageSrc: ''
     }
   },
   computed: {
@@ -92,6 +105,16 @@ export default {
     },
     triggerUpload () {
       this.$refs.fileInput.click()
+    },
+    onFileChange (event) {
+      const file = event.target.files[0]
+
+      const reader = new FileReader()
+      reader.onload = e => {
+        this.imageSrc = reader.result
+      }
+      reader.readAsDataURL(file)
+      this.image = file
     }
   }
 }
