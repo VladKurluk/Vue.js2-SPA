@@ -62,7 +62,14 @@
         <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
                 <v-spacer></v-spacer>
-                <v-btn :loading="loading" :disabled="!valid || loading" class="success" @click="createAd">Create Ad</v-btn>
+                <v-btn 
+                  :loading="loading" 
+                  :disabled="!valid || !image || loading" 
+                  class="success" 
+                  @click="createAd"
+                >
+                  Create Ad
+                </v-btn>
             </v-flex>
         </v-layout>
     </v-container>
@@ -87,7 +94,7 @@ export default {
   },
   methods: {
     createAd () {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.image) {
         const ad = {
           title: this.title,
           description: this.description,
