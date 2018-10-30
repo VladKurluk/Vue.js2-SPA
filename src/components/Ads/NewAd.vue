@@ -25,10 +25,14 @@
         </v-layout>
         <v-layout row class="mb-3">
             <v-flex xs12 sm6 offset-sm3>
-                <v-btn class="warning">
+                <v-btn 
+                  class="warning"
+                  @click="triggerUpload"
+                >
                     Upload image
                     <v-icon right dark>cloud_upload</v-icon>
                 </v-btn>
+                <input ref="fileInput" type="file" style="display: none;" accept='image/*'>
             </v-flex>
         </v-layout>
         <v-layout row>
@@ -85,6 +89,9 @@ export default {
           })
           .catch(() => {})
       }
+    },
+    triggerUpload () {
+      this.$refs.fileInput.click()
     }
   }
 }
