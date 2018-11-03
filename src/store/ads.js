@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
 
-class Ad {
+class AdItem {
   constructor (title, description, ownerId, imageSrc = '', promo = false, id = null) {
     this.title = title
     this.description = description
@@ -31,7 +31,7 @@ export default {
       const image = payload.image
 
       try {
-        const newAd = new Ad(
+        const newAd = new AdItem(
           payload.title,
           payload.description,
           getters.user.id,
@@ -39,20 +39,23 @@ export default {
           payload.promo
         )
 
-        const ad = await firebase.database().ref('ads').push(newAd)
+        const fbDBValue = await firebase.database().ref('ads').push(newAd)
+        // console.log(fbDBValue)
         const imageExt = image.name.slice(image.name.lastIndexOf('.'))
 
-        const fileData = await firebase.storage().ref(`ads/${ad.key}.${imageExt}`).put(image)
-        const imageSrc = fileData.metadata.downloadURLs[0]
+        const fileData = await firebase.storage().ref(`ads/${fbDBValue.key}.${imageExt}`).put(image)
 
-        await firebase.database().ref('ads').child(ad.key).update({
-          imageSrc: imageSrc
-        })
+        const imageSrc = fileData.ref.getDownloadURL()
+          .then((imageSrc) => {
+            firebase.database().ref('ads').child(fbDBValue.key).update({
+              imageSrc
+            })
+          })
 
         commit('setLoading', false)
         commit('createAd', {
           ...newAd,
-          id: ad.key,
+          id: fbDBValue.key,
           imageSrc: imageSrc
         })
       } catch (error) {
@@ -70,10 +73,11 @@ export default {
       try {
         const fbVal = await firebase.database().ref('ads').once('value')
         const ads = fbVal.val()
+        console.log(ads)
         Object.keys(ads).forEach(key => {
           const ad = ads[key]
           resultAds.push(
-            new Ad(ad.title, ad.description, ad.ownerId, ad.imageSrc, ad.promo, key)
+            new AdItem(ad.title, ad.description, ad.ownerId, ad.imageSrc, ad.promo, key)
           )
         })
         commit('loadAds', resultAds)

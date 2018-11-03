@@ -20,8 +20,10 @@ export default {
       commit('clearError')
       commit('setLoading', true)
       try {
-        const user = await firebase.auth().createUserWithEmailAndPassword(email, password)
-        commit('setUser', new User(user.uid))
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        const currentUser = firebase.auth().currentUser.uid
+        // console.log(currentUser)
+        commit('setUser', new User(currentUser))
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)
@@ -41,8 +43,9 @@ export default {
       commit('clearError')
       commit('setLoading', true)
       try {
-        const user = await firebase.auth().signInWithEmailAndPassword(email, password)
-        commit('setUser', new User(user.uid))
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+        const currentUser = firebase.auth().currentUser.uid
+        commit('setUser', new User(currentUser))
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)

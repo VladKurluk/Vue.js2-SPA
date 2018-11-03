@@ -68,10 +68,6 @@
 
 <script>
 export default {
-  data () {
-    return {
-    }
-  },
   computed: {
     promoAds () {
       return this.$store.getters.promoAds
