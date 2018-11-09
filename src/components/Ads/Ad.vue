@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import EditAdModal from './EditAdModal';
+import EditAdModal from './EditAdModal'
 
 export default {
   props: ['id'],

@@ -57,39 +57,38 @@
 
 <script>
 export default {
-    props: ['ad'],
-    data () {
-        return {
-            modal: false,
-            name: '',
-            phone: '',
-            localLoading: false
-        }
-    },
-    methods: {
-      onCancel () {
-        this.name = ''
-        this.phone = ''
-        this.modal = false
-      },
-      onSave () {
-        if (this.name !== '' && this.phone !== '' ) {
-          this.localLoading = true
-          this.$store.dispatch('createOrder', {
-            name: this.name,
-            phone: this.phone,
-            adId: this.ad.id,
-            ownerId: this.ad.ownerId,
-          })
-          .finally(() => {
-            this.name = ''
-            this.phone = ''
-            this.localLoading = false
-            this.modal = false
-          })
-        }
-      }
+  props: ['ad'],
+  data () {
+    return {
+      modal: false,
+      name: '',
+      phone: '',
+      localLoading: false
     }
+  },
+  methods: {
+    onCancel () {
+      this.name = ''
+      this.phone = ''
+      this.modal = false
+    },
+    onSave () {
+      if (this.name !== '' && this.phone !== '' )
+        this.localLoading = true
+        this.$store.dispatch('createOrder', {
+          name: this.name,
+          phone: this.phone,
+          adId: this.ad.id,
+          ownerId: this.ad.ownerId
+        })
+        .finally(() => {
+          this.name = ''
+          this.phone = ''
+          this.localLoading = false
+          this.modal = false
+        })
+    }
+  }
 }
 </script>
 
