@@ -43,7 +43,7 @@
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn flat :to="'/ad/' + ad.id">Open</v-btn>
-                    <app-buy-modal></app-buy-modal>
+                    <app-buy-modal :ad="ad" class="ml-2"></app-buy-modal>
                     
                     </v-card-actions>
                 </v-card>

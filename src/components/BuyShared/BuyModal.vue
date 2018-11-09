@@ -9,7 +9,7 @@
                 <v-layout row>
                     <v-flex xs12>
                         <v-card-title>
-                            <h1 class="text--primary">Edit Ad</h1>
+                            <h1 class="text--primary">Do you want to buy it?</h1>
                         </v-card-title>
                     </v-flex>
                 </v-layout>
@@ -18,17 +18,17 @@
                     <v-flex xs12>
                         <v-card-text>
                            <v-text-field
-                                name="title" 
-                                label="Title" 
+                                name="name" 
+                                label="You're name?" 
                                 type="text"
-                                v-model="editedTitle"
+                                v-model="name"
                             ></v-text-field>
                             <v-text-field
-                                name="description" 
-                                label="Description"
+                                name="phone" 
+                                label="You're phone?"
                                 multi-line 
                                 type="text"
-                                v-model="editedDescription"
+                                v-model="phone"
                             ></v-text-field>
                         </v-card-text>
                     </v-flex>
@@ -38,8 +38,15 @@
                     <v-flex xs12>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn @click="onCancel" class="" flat>Cancel</v-btn>
-                            <v-btn @click="onSave" class="success">Save</v-btn>
+                            <v-btn @click="onCancel" class="" flat :disabled="localLoading">Close</v-btn>
+                            <v-btn 
+                                @click="onSave" 
+                                class="success" 
+                                :disabled="localLoading"
+                                :loading="localLoading"
+                            >
+                                Buy it
+                            </v-btn>
                         </v-card-actions>
                     </v-flex>
                 </v-layout>
@@ -54,24 +61,32 @@ export default {
     data () {
         return {
             modal: false,
-            editedTitle: this.ad.title,
-            editedDescription: this.ad.description
+            name: '',
+            phone: '',
+            localLoading: false
         }
     },
     methods: {
       onCancel () {
-        this.editedDescription = this.ad.description
-        this.editedTitle = this.ad.title
+        this.name = ''
+        this.phone = ''
         this.modal = false
       },
       onSave () {
-        if (this.editedTitle !== '' && this.editedDescription !== '' ) {
-          this.$store.dispatch('updateAd', {
-            title: this.editedTitle,
-            description: this.editedDescription,
-            id: this.ad.id
+        if (this.name !== '' && this.phone !== '' ) {
+          this.localLoading = true
+          this.$store.dispatch('createOrder', {
+            name: this.name,
+            phone: this.phone,
+            adId: this.ad.id,
+            ownerId: this.ad.ownerId,
           })
-          this.modal = false
+          .finally(() => {
+            this.name = ''
+            this.phone = ''
+            this.localLoading = false
+            this.modal = false
+          })
         }
       }
     }
