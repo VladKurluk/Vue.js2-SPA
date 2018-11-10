@@ -22,12 +22,13 @@
                     >
                         <v-list-tile-action>
                             <v-checkbox 
-                              v-model="order.notifications"
+                              :input-value="order.done"
+                              @change="markDone(order)"
                               color="success"
                             ></v-checkbox>
                         </v-list-tile-action>
 
-                        <v-list-tile-content @click="order.notifications = !order.notifications">
+                        <v-list-tile-content>
                             <v-list-tile-title>{{ order.name }}</v-list-tile-title>
                             <v-list-tile-sub-title>{{ order.phone }}</v-list-tile-sub-title>
                         </v-list-tile-content>
@@ -49,10 +50,11 @@
 export default {
   methods: {
     markDone (order) {
-      order.done = true
-    },
-    created () {
-      this.$store.dispatch('fetchOrders')
+      this.$store.dispatch('markOrderDone', order.id)
+        .then(() => {
+          order.done = true
+        })
+        .catch(() => {})
     }
   },
   computed: {
@@ -62,6 +64,9 @@ export default {
     orders () {
       return this.$store.getters.orders 
     }
+  },
+  created () {
+    this.$store.dispatch('fetchOrders')
   }
 }
 </script>

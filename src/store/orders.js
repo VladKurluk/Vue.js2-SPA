@@ -49,6 +49,17 @@ export default {
         commit('setLoading', false)
         commit('setError', error.message)
       }
+    },
+    async markOrderDone ({commit, getters}, payload) {
+      commit('clearError')
+      try {
+        await firebase.database().ref(`/users/${getters.user.id}/orders`).child(payload).update({
+          done: true
+        })
+      } catch (error) {
+        commit('setError', error.message)
+        throw error
+      }
     }
   },
   getters: {

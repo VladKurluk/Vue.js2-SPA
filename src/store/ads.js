@@ -56,7 +56,7 @@ export default {
         const imageSrc = fileData.ref.getDownloadURL()
           .then((imageSrc) => {
             firebase.database().ref('ads').child(fbDBValue.key).update({
-              imageSrc
+              imageSrc: imageSrc
             })
           })
 
@@ -81,7 +81,7 @@ export default {
       try {
         const fbVal = await firebase.database().ref('ads').once('value')
         const ads = fbVal.val()
-        console.log(ads)
+        // console.log(ads)
         Object.keys(ads).forEach(key => {
           const ad = ads[key]
           resultAds.push(
